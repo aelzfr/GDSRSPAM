@@ -20,20 +20,43 @@ const tierOrder = [
 let allLevels = [];
 let visibleTiers = [];
 let currentTierIndex = 0;
+let userCheckmarks = [];
 
 const container = document.getElementById("tiers-container");
 
-fetch(`../data/${DATA_FILE}.json`)
-  .then(res => res.json())
-  .then(levels => {
-    allLevels = levels;
+async function loadList(){
+  const response = await fetch(`../data/${DATA_FILE}.json`);
+  allLevels = await response.json();
 
-    visibleTiers = tierOrder.filter(tier =>
-      allLevels.some(level => level.tier === tier)
-    );
+  visibleTiers = tierOrder.filter(tier =>
+    allLevels.some(level => level.tier === tier)
+  );
 
-    renderTier();
-  });
+  await loadUserCheckmarks();
+
+  renderTier();
+}
+
+async function loadUserCheckmarks(){
+  if(typeof supabaseClient === "undefined") return;
+
+  const { data: userData } = await supabaseClient.auth.getUser();
+
+  if(!userData.user) return;
+
+  const { data, error } = await supabaseClient
+    .from("personal_checkmarks")
+    .select("level_name")
+    .eq("user_id", userData.user.id)
+    .eq("list_name", DATA_FILE);
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  userCheckmarks = data.map(item => item.level_name);
+}
 
 function renderTier(){
   container.innerHTML = "";
@@ -68,11 +91,15 @@ function renderTier(){
   const grid = wrapper.querySelector(".level-grid");
 
   filteredLevels.forEach(level => {
+    const isChecked = userCheckmarks.includes(level.name);
+
     const card = document.createElement("div");
     card.className = "card";
 
     card.innerHTML = `
-      <div class="level-name">${level.name}</div>
+      <div class="level-name">
+        ${level.name}
+      </div>
 
       <div class="creator">
         by ${level.creator}
@@ -89,6 +116,12 @@ function renderTier(){
       <div class="desc">
         ${level.description}
       </div>
+
+      <button
+        class="checkmark-button ${isChecked ? "checked" : ""}"
+        data-level="${level.name}">
+        ${isChecked ? "✓ Completed" : "✓ Mark Complete"}
+      </button>
     `;
 
     grid.appendChild(card);
@@ -115,4 +148,67 @@ function renderTier(){
 
     renderTier();
   };
+
+  setupCheckmarkButtons();
 }
+
+function setupCheckmarkButtons(){
+  const buttons = document.querySelectorAll(".checkmark-button");
+
+  buttons.forEach(button => {
+    button.onclick = async () => {
+      await toggleCheckmark(button.dataset.level);
+    };
+  });
+}
+
+async function toggleCheckmark(levelName){
+  if(typeof supabaseClient === "undefined"){
+    alert("Auth is not loaded.");
+    return;
+  }
+
+  const { data: userData } = await supabaseClient.auth.getUser();
+
+  if(!userData.user){
+    alert("Log in first.");
+    return;
+  }
+
+  const alreadyChecked = userCheckmarks.includes(levelName);
+
+  if(alreadyChecked){
+    const { error } = await supabaseClient
+      .from("personal_checkmarks")
+      .delete()
+      .eq("user_id", userData.user.id)
+      .eq("list_name", DATA_FILE)
+      .eq("level_name", levelName);
+
+    if(error){
+      alert(error.message);
+      return;
+    }
+
+    userCheckmarks = userCheckmarks.filter(name => name !== levelName);
+  }else{
+    const { error } = await supabaseClient
+      .from("personal_checkmarks")
+      .insert({
+        user_id: userData.user.id,
+        list_name: DATA_FILE,
+        level_name: levelName
+      });
+
+    if(error){
+      alert(error.message);
+      return;
+    }
+
+    userCheckmarks.push(levelName);
+  }
+
+  renderTier();
+}
+
+loadList();
