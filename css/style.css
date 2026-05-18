@@ -337,16 +337,3 @@ h1{
     grid-template-columns:1fr;
   }
 }
-
-.bottom-section{
-  align-items:stretch;
-}
-
-.bottom-section > section{
-  display:flex;
-  flex-direction:column;
-}
-
-.discord-box iframe{
-  flex:1;
-}
