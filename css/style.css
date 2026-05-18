@@ -337,3 +337,25 @@ h1{
     grid-template-columns:1fr;
   }
 }
+
+.section-divider{
+  width:100%;
+  height:2px;
+
+  background:linear-gradient(
+    to right,
+    transparent,
+    #222,
+    #00ffe1,
+    #222,
+    transparent
+  );
+
+  margin-top:70px;
+  margin-bottom:70px;
+
+  border-radius:999px;
+
+  box-shadow:
+  0 0 12px rgba(0,255,225,0.15);
+}
