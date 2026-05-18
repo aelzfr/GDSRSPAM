@@ -10,37 +10,36 @@
 
   <a class="back-button" href="index.html">← Back to Hub</a>
 
-  <h1>Your Profile</h1>
+<h1>Your Profile</h1>
 
-  <p class="subtitle">
-    Edit your public GDSR profile info.
-  </p>
+<p class="subtitle">
+  Edit your public GDSR profile info.
+</p>
 
-  <main class="form-page">
-    <div class="form-box">
+<main class="form-page">
+  <div class="form-box">
 
-      <label>Nickname</label>
-      <input id="nickname" placeholder="Your nickname">
+    <label for="nickname">Nickname</label>
+    <input id="nickname" placeholder="Your nickname">
 
-      <label>Country</label>
-      <input id="country" placeholder="Country">
+    <label for="country">Country</label>
+    <input id="country" placeholder="Country">
 
-      <label>Pronouns</label>
-      <input id="pronouns" placeholder="Pronouns">
+    <label for="pronouns">Pronouns</label>
+    <input id="pronouns" placeholder="Pronouns">
 
-      <label>Bio</label>
-      <textarea id="bio" placeholder="About you"></textarea>
+    <label for="bio">Bio</label>
+    <textarea id="bio" placeholder="About you"></textarea>
 
-      <button class="submit-button" onclick="saveProfile()">
-        Save Profile
-      </button>
+    <button class="submit-button" onclick="saveProfile()">
+      Save Profile
+    </button>
 
-    </div>
-  </main>
+  </div>
+</main>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/profile.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/auth.js"></script>
+<script src="js/profile.js"></script>
 </body>
 </html>
