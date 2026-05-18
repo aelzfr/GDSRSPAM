@@ -3,7 +3,7 @@ const params = new URLSearchParams(window.location.search);
 const currentList =
   params.get("list") || "spam";
 
-fetch(`data/${DATA_FILE}.json`)
+fetch(`../data/${DATA_FILE}.json`)
   .then(res => res.json())
   .then(levels => {
 
