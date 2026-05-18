@@ -7,64 +7,38 @@ const supabaseClient = supabase.createClient(
 );
 
 async function loginWithDiscord(){
-
-  const { error } =
   await supabaseClient.auth.signInWithOAuth({
-
     provider: "discord",
-
     options: {
       redirectTo: window.location.origin
     }
-
   });
-
-  if(error){
-    console.error(error);
-  }
-
 }
 
 async function logout(){
-
   await supabaseClient.auth.signOut();
-
   location.reload();
-
 }
 
 async function updateAccountButton(){
+  const { data } = await supabaseClient.auth.getUser();
 
-  const { data } =
-  await supabaseClient.auth.getUser();
-
-  const button =
-  document.querySelector(".login-button");
+  const button = document.querySelector(".login-button");
 
   if(!button) return;
 
   if(data.user){
-
     const name =
-    data.user.user_metadata.full_name ||
-    data.user.user_metadata.name ||
-    "Logged In";
+      data.user.user_metadata.full_name ||
+      data.user.user_metadata.name ||
+      "Logged In";
 
-    button.textContent =
-    `Logout: ${name}`;
-
+    button.textContent = `Logout: ${name}`;
     button.onclick = logout;
-
   }else{
-
-    button.textContent =
-    "Login with Discord";
-
-    button.onclick =
-    loginWithDiscord;
-
+    button.textContent = "Login with Discord";
+    button.onclick = loginWithDiscord;
   }
-
 }
 
 updateAccountButton();
