@@ -10,8 +10,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // BRONZE
   {
     name: "Wave Spam God",
     creator: "n/a",
@@ -46,7 +44,6 @@
     description: "n/a"
   },
 
-  // SILVER
   {
     name: "URMSSLG",
     creator: "n/a",
@@ -69,8 +66,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // GOLD
   {
     name: "Limbomination",
     creator: "n/a",
@@ -93,8 +88,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // AMBER
   {
     name: "spaceless",
     creator: "n/a",
@@ -117,8 +110,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // PLATINUM
   {
     name: "CROQUETA",
     creator: "n/a",
@@ -141,8 +132,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // SAPPHIRE
   {
     name: "Cataclysmic Bob",
     creator: "n/a",
@@ -187,8 +176,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // JADE
   {
     name: "why the spam",
     creator: "n/a",
@@ -233,8 +220,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // EMERALD
   {
     name: "TSII End",
     creator: "n/a",
@@ -279,8 +264,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // RUBY
   {
     name: "Cataclysmic Deity",
     creator: "n/a",
@@ -347,8 +330,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // DIAMOND
   {
     name: "PHIDELTNOCLASS",
     creator: "n/a",
@@ -426,8 +407,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // TITANIUM
   {
     name: "Fardstep",
     creator: "n/a",
@@ -516,8 +495,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // AMETHYST
   {
     name: "CHARLIE MURDER",
     creator: "n/a",
@@ -584,8 +561,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // OBSIDIAN
   {
     name: "CHAOS",
     creator: "n/a",
@@ -685,8 +660,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // URANIUM
   {
     name: "PURE CHAOS",
     creator: "n/a",
@@ -742,8 +715,6 @@
     typeOfSpam: "n/a",
     description: "n/a"
   },
-
-  // BEDROCK
   {
     name: "STOICISM",
     creator: "n/a",
