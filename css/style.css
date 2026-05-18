@@ -360,12 +360,6 @@ h1{
   0 0 12px rgba(0,255,225,0.15);
 }
 
-.account-bar{
-  position:absolute;
-  top:30px;
-  right:40px;
-}
-
 .login-button{
   background:#5865f2;
   color:white;
@@ -416,4 +410,34 @@ h1{
   background:#00ffe1;
   color:#0d1117;
   border-color:#00ffe1;
+}
+
+.account-bar{
+  position:absolute;
+  top:30px;
+  right:40px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+.login-button,
+.profile-button{
+  background:#161b22;
+  color:white;
+  border:2px solid #222;
+  border-radius:14px;
+  padding:12px 18px;
+  font-size:1rem;
+  font-weight:bold;
+  cursor:pointer;
+  text-decoration:none;
+  transition:0.2s;
+}
+
+.login-button:hover,
+.profile-button:hover{
+  border-color:#00ffe1;
+  box-shadow:0 0 15px rgba(0,255,225,0.2);
+  transform:translateY(-2px);
 }
