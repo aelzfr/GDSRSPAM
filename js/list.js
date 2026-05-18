@@ -122,6 +122,12 @@ function renderTier(){
         data-level="${level.name}">
         ${isChecked ? "✓ Completed" : "✓ Mark Complete"}
       </button>
+
+      <a
+        class="submit-level-button"
+        href="../submit.html?list=${DATA_FILE}&level=${encodeURIComponent(level.name)}">
+        Submit Completion
+      </a>
     `;
 
     grid.appendChild(card);
