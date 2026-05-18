@@ -463,7 +463,8 @@ h1{
 }
 
 .form-box input,
-.form-box textarea{
+.form-box textarea,
+.form-box select{
   width:100%;
   background:#0d1117;
   color:white;
@@ -480,7 +481,8 @@ h1{
 }
 
 .form-box input:focus,
-.form-box textarea:focus{
+.form-box textarea:focus,
+.form-box select:focus{
   border-color:#00ffe1;
   box-shadow:0 0 12px rgba(0,255,225,0.15);
 }
