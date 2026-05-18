@@ -5,6 +5,37 @@
   font-family:Arial, Helvetica, sans-serif;
 }
 
+.hub-grid{
+  display:grid;
+  grid-template-columns:
+  repeat(auto-fit,minmax(320px,1fr));
+
+  gap:30px;
+  margin-top:60px;
+}
+
+.hub-card{
+  background:#161b22;
+  border:2px solid #222;
+  border-radius:20px;
+  padding:40px;
+  text-decoration:none;
+  color:white;
+  transition:0.25s;
+}
+
+.hub-card:hover{
+  transform:translateY(-6px);
+  border-color:#00ffe1;
+  box-shadow:
+  0 0 25px rgba(0,255,225,0.25);
+}
+
+.hub-card h2{
+  margin-bottom:15px;
+  color:#00ffe1;
+}
+
 body{
   background:#0d1117;
   color:white;
@@ -55,6 +86,7 @@ h1{
   border-color:#00ffe1;
   box-shadow:0 0 25px rgba(0,255,225,0.25);
 }
+
 
 .level-name{
   font-size:1.5rem;
