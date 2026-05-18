@@ -1,29 +1,70 @@
 const supabaseUrl = "https://yciremvutpgmzihtgszm.supabase.co";
 const supabaseAnonKey = "sb_publishable_ZaWi9vl7Mzi6YoQ6mf0MrA_EXPxuMLl";
 
-const supabase = window.supabase.createClient(
+const supabaseClient = supabase.createClient(
   supabaseUrl,
   supabaseAnonKey
 );
 
 async function loginWithDiscord(){
-  await supabase.auth.signInWithOAuth({
+
+  const { error } =
+  await supabaseClient.auth.signInWithOAuth({
+
     provider: "discord",
+
     options: {
       redirectTo: window.location.origin
     }
+
   });
+
+  if(error){
+    console.error(error);
+  }
+
 }
 
 async function logout(){
-  await supabase.auth.signOut();
+
+  await supabaseClient.auth.signOut();
+
   location.reload();
+
 }
 
-async function showUser(){
-  const { data } = await supabase.auth.getUser();
+async function updateAccountButton(){
 
-  console.log(data.user);
+  const { data } =
+  await supabaseClient.auth.getUser();
+
+  const button =
+  document.querySelector(".login-button");
+
+  if(!button) return;
+
+  if(data.user){
+
+    const name =
+    data.user.user_metadata.full_name ||
+    data.user.user_metadata.name ||
+    "Logged In";
+
+    button.textContent =
+    `Logout: ${name}`;
+
+    button.onclick = logout;
+
+  }else{
+
+    button.textContent =
+    "Login with Discord";
+
+    button.onclick =
+    loginWithDiscord;
+
+  }
+
 }
 
-showUser();
+updateAccountButton();
