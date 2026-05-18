@@ -359,3 +359,33 @@ h1{
   box-shadow:
   0 0 12px rgba(0,255,225,0.15);
 }
+
+.account-bar{
+  position:absolute;
+  top:30px;
+  right:40px;
+}
+
+.login-button{
+  background:#5865f2;
+  color:white;
+
+  border:none;
+  border-radius:14px;
+
+  padding:12px 18px;
+
+  font-size:1rem;
+  font-weight:bold;
+
+  cursor:pointer;
+
+  transition:0.2s;
+}
+
+.login-button:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+  0 0 18px rgba(88,101,242,0.35);
+}
