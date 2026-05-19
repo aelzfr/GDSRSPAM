@@ -3,164 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile - GDSR Hub</title>
+  <title>Your Profile - GDSR Hub</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <a class="back-button" href="index.html">← Back to Hub</a>
 
-<h1>Your Profile</h1>
+  <h1>Your Profile</h1>
 
-<p class="subtitle">
-  Edit your public GDSR profile info.
-</p>
+  <p class="subtitle">
+    View your profile and submitted completions.
+  </p>
 
-<main class="form-page">
-  <div class="form-box">
+  <main class="profile-page">
 
-    <label for="nickname">Nickname</label>
-    <input id="nickname" placeholder="Your nickname">
+    <section class="profile-display-card">
+      <div class="profile-header">
+        <h2 id="profile-name">Loading...</h2>
 
-    <label for="country">Country</label>
-    <select id="country">
+        <a class="edit-profile-button" href="edit-profile.html">
+          Edit Profile
+        </a>
+      </div>
 
-<option value="">Select Country</option>
+      <div class="profile-info-grid">
+        <p><strong>Discord Username:</strong> <span id="discord-name">Loading...</span></p>
+        <p><strong>Displayed Nickname:</strong> <span id="nickname">Not set</span></p>
+        <p><strong>Pronouns:</strong> <span id="pronouns">Not set</span></p>
+        <p><strong>Country:</strong> <span id="country">Not set</span></p>
+        <p><strong>Bio:</strong> <span id="bio">Not set</span></p>
+      </div>
+    </section>
 
-<option>Afghanistan</option>
-<option>Albania</option>
-<option>Algeria</option>
-<option>Argentina</option>
-<option>Armenia</option>
-<option>Australia</option>
-<option>Austria</option>
-<option>Azerbaijan</option>
-<option>Bangladesh</option>
-<option>Belarus</option>
-<option>Belgium</option>
-<option>Bolivia</option>
-<option>Bosnia and Herzegovina</option>
-<option>Brazil</option>
-<option>Bulgaria</option>
-<option>Cambodia</option>
-<option>Cameroon</option>
-<option>Canada</option>
-<option>Chile</option>
-<option>China</option>
-<option>Colombia</option>
-<option>Costa Rica</option>
-<option>Croatia</option>
-<option>Cuba</option>
-<option>Czech Republic</option>
-<option>Denmark</option>
-<option>Dominican Republic</option>
-<option>Ecuador</option>
-<option>Egypt</option>
-<option>El Salvador</option>
-<option>Estonia</option>
-<option>Ethiopia</option>
-<option>Finland</option>
-<option>France</option>
-<option>Georgia</option>
-<option>Germany</option>
-<option>Ghana</option>
-<option>Greece</option>
-<option>Guatemala</option>
-<option>Haiti</option>
-<option>Honduras</option>
-<option>Hong Kong</option>
-<option>Hungary</option>
-<option>Iceland</option>
-<option>India</option>
-<option>Indonesia</option>
-<option>Iran</option>
-<option>Iraq</option>
-<option>Ireland</option>
-<option>Israel</option>
-<option>Italy</option>
-<option>Jamaica</option>
-<option>Japan</option>
-<option>Jordan</option>
-<option>Kazakhstan</option>
-<option>Kenya</option>
-<option>Kuwait</option>
-<option>Kyrgyzstan</option>
-<option>Laos</option>
-<option>Latvia</option>
-<option>Lebanon</option>
-<option>Lithuania</option>
-<option>Luxembourg</option>
-<option>Malaysia</option>
-<option>Mexico</option>
-<option>Moldova</option>
-<option>Mongolia</option>
-<option>Montenegro</option>
-<option>Morocco</option>
-<option>Nepal</option>
-<option>Netherlands</option>
-<option>New Zealand</option>
-<option>Nicaragua</option>
-<option>Nigeria</option>
-<option>North Macedonia</option>
-<option>Norway</option>
-<option>Pakistan</option>
-<option>Panama</option>
-<option>Paraguay</option>
-<option>Peru</option>
-<option>Philippines</option>
-<option>Poland</option>
-<option>Portugal</option>
-<option>Puerto Rico</option>
-<option>Qatar</option>
-<option>Romania</option>
-<option>Russia</option>
-<option>Saudi Arabia</option>
-<option>Serbia</option>
-<option>Singapore</option>
-<option>Slovakia</option>
-<option>Slovenia</option>
-<option>South Africa</option>
-<option>South Korea</option>
-<option>Spain</option>
-<option>Sri Lanka</option>
-<option>Sweden</option>
-<option>Switzerland</option>
-<option>Syria</option>
-<option>Taiwan</option>
-<option>Tajikistan</option>
-<option>Thailand</option>
-<option>Tunisia</option>
-<option>Turkey</option>
-<option>Turkmenistan</option>
-<option>Ukraine</option>
-<option>United Arab Emirates</option>
-<option>United Kingdom</option>
-<option>United States</option>
-<option>Uruguay</option>
-<option>Uzbekistan</option>
-<option>Venezuela</option>
-<option>Vietnam</option>
-<option>Yemen</option>
+    <section class="completion-section">
+      <h2>Approved Completions</h2>
+      <div id="approved-completions" class="completion-list"></div>
+    </section>
 
-<option>Other</option>
+    <section class="completion-section">
+      <h2>Pending Completions</h2>
+      <div id="pending-completions" class="completion-list"></div>
+    </section>
 
-    </select>
+    <section class="completion-section">
+      <h2>Denied Completions</h2>
+      <div id="denied-completions" class="completion-list"></div>
+    </section>
 
-    <label for="pronouns">Pronouns</label>
-    <input id="pronouns" placeholder="Pronouns">
+  </main>
 
-    <label for="bio">Bio</label>
-    <textarea id="bio" placeholder="About you"></textarea>
-
-    <button class="submit-button" onclick="saveProfile()">
-      Save Profile
-    </button>
-
+  <div id="completion-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeCompletionModal()">×</button>
+      <div id="modal-body"></div>
+    </div>
   </div>
-</main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/auth.js"></script>
-<script src="js/profile.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/profile.js"></script>
+
 </body>
 </html>

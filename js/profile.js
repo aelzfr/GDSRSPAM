@@ -1,4 +1,6 @@
-async function loadProfile(){
+let userSubmissions = [];
+
+async function loadProfilePage(){
   const { data: userData } = await supabaseClient.auth.getUser();
 
   if(!userData.user){
@@ -7,52 +9,136 @@ async function loadProfile(){
     return;
   }
 
-  const { data, error } = await supabaseClient
+  const user = userData.user;
+
+  const discordName =
+    user.user_metadata.full_name ||
+    user.user_metadata.name ||
+    "Unknown";
+
+  document.getElementById("discord-name").textContent = discordName;
+
+  const { data: profile } = await supabaseClient
     .from("profiles")
     .select("*")
-    .eq("id", userData.user.id)
+    .eq("id", user.id)
     .single();
 
-  if(error && error.code !== "PGRST116"){
+  document.getElementById("profile-name").textContent =
+    profile?.nickname || discordName;
+
+  document.getElementById("nickname").textContent =
+    profile?.nickname || "Not set";
+
+  document.getElementById("pronouns").textContent =
+    profile?.pronouns || "Not set";
+
+  document.getElementById("country").textContent =
+    profile?.country || "Not set";
+
+  document.getElementById("bio").textContent =
+    profile?.bio || "Not set";
+
+  await loadCompletions(user.id);
+}
+
+async function loadCompletions(userId){
+  const { data, error } = await supabaseClient
+    .from("submissions")
+    .select("*")
+    .eq("user_id", userId)
+    .order("submitted_at", { ascending: false });
+
+  if(error){
     console.error(error);
     return;
   }
 
-  if(data){
-    document.getElementById("nickname").value = data.nickname || "";
-    document.getElementById("country").value = data.country || "";
-    document.getElementById("pronouns").value = data.pronouns || "";
-    document.getElementById("bio").value = data.bio || "";
-  }
+  userSubmissions = data;
+
+  renderCompletionGroup("approved-completions", "accepted");
+  renderCompletionGroup("pending-completions", "pending");
+  renderCompletionGroup("denied-completions", "rejected");
 }
 
-async function saveProfile(){
-  const { data: userData } = await supabaseClient.auth.getUser();
+function renderCompletionGroup(containerId, status){
+  const container = document.getElementById(containerId);
 
-  if(!userData.user){
-    alert("Log in first.");
+  const filtered = userSubmissions.filter(item =>
+    item.status === status
+  );
+
+  container.innerHTML = "";
+
+  if(filtered.length === 0){
+    container.innerHTML = `<p class="empty-text">None yet.</p>`;
     return;
   }
 
-  const profile = {
-    id: userData.user.id,
-    nickname: document.getElementById("nickname").value,
-    country: document.getElementById("country").value,
-    pronouns: document.getElementById("pronouns").value,
-    bio: document.getElementById("bio").value,
-    updated_at: new Date()
-  };
+  filtered.forEach(item => {
+    const card = document.createElement("button");
+    card.className = `completion-button ${status}`;
+    card.onclick = () => openCompletionModal(item.id);
 
-  const { error } = await supabaseClient
-    .from("profiles")
-    .upsert(profile);
+    card.innerHTML = `
+      <span>${item.level_name}</span>
+      <small>${item.list_name} • ${item.fps} FPS</small>
+    `;
 
-  if(error){
-    alert(error.message);
-    return;
-  }
-
-  alert("Profile saved.");
+    container.appendChild(card);
+  });
 }
 
-loadProfile();
+function openCompletionModal(id){
+  const item = userSubmissions.find(submission => submission.id === id);
+
+  if(!item) return;
+
+  const modal = document.getElementById("completion-modal");
+  const body = document.getElementById("modal-body");
+
+  body.innerHTML = `
+    <h2>${item.level_name}</h2>
+
+    ${getVideoEmbed(item.video_url)}
+
+    <p><strong>List:</strong> ${item.list_name}</p>
+    <p><strong>FPS:</strong> ${item.fps}</p>
+    <p><strong>Status:</strong> ${item.status}</p>
+    <p><strong>Notes:</strong> ${item.notes || "None"}</p>
+  `;
+
+  modal.classList.remove("hidden");
+}
+
+function closeCompletionModal(){
+  document.getElementById("completion-modal").classList.add("hidden");
+}
+
+function getVideoEmbed(url){
+  let embedUrl = "";
+
+  if(url.includes("youtube.com/watch?v=")){
+    const id = url.split("v=")[1].split("&")[0];
+    embedUrl = `https://www.youtube.com/embed/${id}`;
+  }
+
+  if(url.includes("youtu.be/")){
+    const id = url.split("youtu.be/")[1].split("?")[0];
+    embedUrl = `https://www.youtube.com/embed/${id}`;
+  }
+
+  if(!embedUrl){
+    return `<a class="video-link" href="${url}" target="_blank">Open Video</a>`;
+  }
+
+  return `
+    <iframe
+      class="record-video"
+      src="${embedUrl}"
+      allowfullscreen>
+    </iframe>
+  `;
+}
+
+loadProfilePage();
