@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Completion - GDSR Hub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a class="back-button" href="index.html">← Back to Hub</a>
+
+  <h1>Submit Completion</h1>
+
+  <p class="subtitle">
+    Send a completion for staff review.
+  </p>
+
+  <main class="form-page">
+    <div class="form-box">
+
+      <label for="level-select">Level Title</label>
+      <select id="level-select"></select>
+
+      <label for="fps">FPS</label>
+      <input id="fps" placeholder="Example: 60, 240, 360, locked">
+
+      <label for="video-url">Video Link</label>
+      <input id="video-url" placeholder="https://youtube.com/...">
+
+      <label for="notes">Notes</label>
+      <textarea id="notes" placeholder="Any extra proof, clicks, context, or comments"></textarea>
+
+      <button class="submit-button" onclick="submitCompletion()">
+        Submit Completion
+      </button>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/submit.js"></script>
+
+</body>
+</html>
