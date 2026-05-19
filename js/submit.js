@@ -4,22 +4,9 @@ const LIST_NAME = params.get("list") || "spam";
 const SELECTED_LEVEL = params.get("level");
 
 const tierOrder = [
-  "wood",
-  "bronze",
-  "silver",
-  "gold",
-  "amber",
-  "platinum",
-  "sapphire",
-  "jade",
-  "emerald",
-  "ruby",
-  "diamond",
-  "titanium",
-  "amethyst",
-  "obsidian",
-  "uranium",
-  "bedrock"
+  "wood", "bronze", "silver", "gold", "amber", "platinum",
+  "sapphire", "jade", "emerald", "ruby", "diamond",
+  "titanium", "amethyst", "obsidian", "uranium", "bedrock"
 ];
 
 async function loadLevelDropdown(){
@@ -27,6 +14,7 @@ async function loadLevelDropdown(){
   const levels = await response.json();
 
   const select = document.getElementById("level-select");
+  select.innerHTML = "";
 
   tierOrder.forEach(tier => {
     const tierLevels = levels.filter(level => level.tier === tier);
@@ -57,7 +45,6 @@ async function loadLevelDropdown(){
   });
 
   updateFpsField();
-
   select.addEventListener("change", updateFpsField);
 }
 
@@ -71,11 +58,9 @@ function updateFpsField(){
   if(lockedFps){
     fpsInput.value = lockedFps;
     fpsInput.readOnly = true;
-    fpsInput.placeholder = "FPS locked for this level";
   }else{
     fpsInput.value = "";
     fpsInput.readOnly = false;
-    fpsInput.placeholder = "Example: 60, 240, 360";
   }
 }
 
@@ -92,15 +77,21 @@ async function submitCompletion(){
   const videoUrl = document.getElementById("video-url").value;
   const notes = document.getElementById("notes").value;
 
-  if(!videoUrl){
-    alert("Add a video link.");
+  if(!levelName || !fps || !videoUrl){
+    alert("Level, FPS, and video link are required.");
     return;
   }
+
+  const discordName =
+    userData.user.user_metadata.full_name ||
+    userData.user.user_metadata.name ||
+    "Unknown";
 
   const { error } = await supabaseClient
     .from("submissions")
     .insert({
       user_id: userData.user.id,
+      discord_name: discordName,
       list_name: LIST_NAME,
       level_name: levelName,
       fps: fps,
@@ -114,7 +105,10 @@ async function submitCompletion(){
     return;
   }
 
-  alert("Submitted for review.");
+  alert("Submitted for staff review.");
+
+  document.getElementById("video-url").value = "";
+  document.getElementById("notes").value = "";
 }
 
 loadLevelDropdown();
