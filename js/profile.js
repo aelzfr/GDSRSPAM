@@ -11,6 +11,10 @@ async function loadProfilePage(){
 
   const user = userData.user;
 
+  document.getElementById("profile-avatar").src =
+  user.user_metadata.avatar_url ||
+  "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
   const discordName =
     user.user_metadata.full_name ||
     user.user_metadata.name ||
