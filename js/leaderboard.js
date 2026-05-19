@@ -227,8 +227,16 @@ function renderLeaderboard(){
       ? `<p><strong>Tag Completions:</strong> ${player.tagCounts[tagFilter] || 0}</p>`
       : "";
 
+    const avatar =
+      player.avatar_url ||
+      "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
     card.innerHTML = `
       <div class="leaderboard-rank">#${index + 1}</div>
+
+      <img class="leaderboard-avatar" src="${avatar}">
+
+      <div class="leaderboard-main">
 
       <div class="leaderboard-main">
         <a href="public-profile.html?id=${player.id}">

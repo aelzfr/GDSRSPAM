@@ -29,13 +29,25 @@ async function saveProfileEdits(){
     return;
   }
 
-  const profile = {
-    id: userData.user.id,
-    nickname: document.getElementById("nickname-input").value,
-    pronouns: document.getElementById("pronouns-input").value,
-    country: document.getElementById("country-input").value,
-    bio: document.getElementById("bio-input").value
-  };
+const profile = {
+  id: userData.user.id,
+
+  nickname: document.getElementById("nickname-input").value,
+
+  pronouns: document.getElementById("pronouns-input").value,
+
+  country: document.getElementById("country-input").value,
+
+  bio: document.getElementById("bio-input").value,
+
+  discord_name:
+    userData.user.user_metadata.full_name ||
+    userData.user.user_metadata.name ||
+    "Unknown",
+
+  avatar_url:
+    userData.user.user_metadata.avatar_url || null
+};
 
   const { error } = await supabaseClient
     .from("profiles")
