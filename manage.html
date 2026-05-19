@@ -62,35 +62,53 @@
     <button class="submit-button" onclick="removeLevel()">Remove Level</button>
   </div>
 
-  <div class="form-box">
-    <h2>Create Tag</h2>
+ <div class="form-box">
+  <h2>Create Tag</h2>
 
-    <label>Tag Name</label>
-    <input id="tag-name">
+  <label>Tag Name</label>
+  <input id="tag-name">
 
-    <label>Color</label>
-    <input id="tag-color" type="color" value="#00ffe1">
+  <label>Color</label>
+  <input id="tag-color" type="color" value="#00ffe1">
 
-    <button class="submit-button" onclick="createTag()">Create Tag</button>
-  </div>
+  <button class="submit-button" onclick="createTag()">Create Tag</button>
+</div>
 
-  <div class="form-box">
-    <h2>Add Tag To Level</h2>
+<div class="form-box">
+  <h2>Add Tag To Level</h2>
 
-    <label>List</label>
-    <select id="tag-list">
-      <option value="spam">Spam</option>
-      <option value="consistency">Consistency</option>
-    </select>
+  <label>List</label>
+  <select id="tag-list" onchange="loadLevelDropdowns()">
+    <option value="spam">Spam</option>
+    <option value="consistency">Consistency</option>
+  </select>
 
-    <label>Level Name</label>
-    <input id="tag-level">
+  <label>Level</label>
+  <select id="tag-level"></select>
 
-    <label>Tag</label>
-    <select id="tag-select"></select>
+  <label>Tag</label>
+  <select id="tag-select"></select>
 
-    <button class="submit-button" onclick="addTagToLevel()">Add Tag</button>
-  </div>
+  <button class="submit-button" onclick="addTagToLevel()">Add Tag</button>
+</div>
+
+<div class="form-box">
+  <h2>Remove Tag From Level</h2>
+
+  <label>List</label>
+  <select id="remove-tag-list" onchange="loadRemoveTagLevelDropdown()">
+    <option value="spam">Spam</option>
+    <option value="consistency">Consistency</option>
+  </select>
+
+  <label>Level</label>
+  <select id="remove-tag-level" onchange="loadTagsForSelectedLevel()"></select>
+
+  <label>Tag</label>
+  <select id="remove-tag-select"></select>
+
+  <button class="submit-button" onclick="removeTagFromLevel()">Remove Tag</button>
+</div>
 
 </main>
 
