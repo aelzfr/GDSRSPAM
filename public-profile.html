@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Public Profile - GDSR Hub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a class="back-button" href="leaderboard.html">← Back to Leaderboard</a>
+
+  <h1>Player Profile</h1>
+
+  <main class="profile-page">
+
+    <section class="profile-display-card">
+
+      <div class="profile-top">
+        <img id="public-avatar" class="profile-avatar">
+      </div>
+
+      <div class="profile-header">
+        <h2 id="public-nickname">Loading...</h2>
+      </div>
+
+      <div class="profile-info-grid">
+        <p><strong>Discord Username:</strong> <span id="public-discord">Loading...</span></p>
+        <p><strong>Pronouns:</strong> <span id="public-pronouns">Not set</span></p>
+        <p><strong>Country:</strong> <span id="public-country">Not set</span></p>
+        <p><strong>Bio:</strong> <span id="public-bio">Not set</span></p>
+      </div>
+
+    </section>
+
+    <section class="completion-section">
+      <h2>Approved Completions</h2>
+      <div id="public-completions" class="completion-list"></div>
+    </section>
+
+  </main>
+
+  <div id="completion-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeCompletionModal()">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/public-profile.js"></script>
+
+</body>
+</html>
