@@ -29,24 +29,30 @@ async function saveProfileEdits(){
     return;
   }
 
+const metadata = userData.user.user_metadata;
+
+console.log("USER METADATA:", metadata);
+
 const profile = {
   id: userData.user.id,
 
   nickname: document.getElementById("nickname-input").value,
-
   pronouns: document.getElementById("pronouns-input").value,
-
   country: document.getElementById("country-input").value,
-
   bio: document.getElementById("bio-input").value,
 
   discord_name:
-    userData.user.user_metadata.full_name ||
-    userData.user.user_metadata.name ||
+    metadata.full_name ||
+    metadata.name ||
+    metadata.user_name ||
+    metadata.preferred_username ||
     "Unknown",
 
   avatar_url:
-    userData.user.user_metadata.avatar_url || null
+    metadata.avatar_url ||
+    metadata.picture ||
+    metadata.avatar ||
+    null
 };
 
   const { error } = await supabaseClient
