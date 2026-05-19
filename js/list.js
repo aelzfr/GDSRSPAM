@@ -17,6 +17,8 @@ const tierOrder = [
   "bedrock"
 ];
 
+
+let levelTags = [];
 let allLevels = [];
 let visibleTiers = [];
 let currentTierIndex = 0;
@@ -26,7 +28,42 @@ const container = document.getElementById("tiers-container");
 
 async function loadList(){
   const response = await fetch(`../data/${DATA_FILE}.json`);
-  allLevels = await response.json();
+  const jsonLevels = await response.json();
+
+  const { data: addedLevels } = await supabaseClient
+    .from("added_levels")
+    .select("*")
+    .eq("list_name", DATA_FILE);
+
+  const { data: removedLevels } = await supabaseClient
+    .from("removed_levels")
+    .select("level_name")
+    .eq("list_name", DATA_FILE);
+
+  const removedNames = removedLevels.map(item => item.level_name);
+
+  const cleanedJsonLevels = jsonLevels.filter(level =>
+    !removedNames.includes(level.name)
+  );
+
+  const formattedAddedLevels = addedLevels.map(level => ({
+    name: level.name,
+    creator: level.creator,
+    tier: level.tier,
+    gamemode: level.gamemode,
+    difficulty: level.difficulty,
+    fps: level.fps,
+    method: level.method,
+    typeOfSpam: level.type_of_spam,
+    description: level.description
+  }));
+
+  allLevels = [
+    ...cleanedJsonLevels,
+    ...formattedAddedLevels
+  ];
+
+  await loadLevelTags();
 
   visibleTiers = tierOrder.filter(tier =>
     allLevels.some(level => level.tier === tier)
@@ -35,6 +72,39 @@ async function loadList(){
   await loadUserCheckmarks();
 
   renderTier();
+}
+async function loadLevelTags(){
+  const { data, error } = await supabaseClient
+    .from("level_tags")
+    .select(`
+      level_name,
+      tags (
+        name,
+        color
+      )
+    `)
+    .eq("list_name", DATA_FILE);
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  levelTags = data;
+}
+
+function renderTags(levelName){
+  const tagsForLevel = levelTags.filter(item =>
+    item.level_name === levelName
+  );
+
+  return tagsForLevel.map(item => `
+    <span
+      class="level-tag"
+      style="background:${item.tags.color}">
+      ${item.tags.name}
+    </span>
+  `).join("");
 }
 
 async function loadUserCheckmarks(){
@@ -107,6 +177,10 @@ function renderTier(){
 
       <div class="gamemode ${level.gamemode}">
         ${level.gamemode.toUpperCase()}
+      </div>
+
+      <div class="tag-row">
+        ${renderTags(level.name)}
       </div>
 
       <div class="spam-bar">

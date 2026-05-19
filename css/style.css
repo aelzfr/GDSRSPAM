@@ -725,3 +725,18 @@ h1{
   font-size:1.4rem;
   cursor:pointer;
 }
+
+.tag-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:14px;
+}
+
+.level-tag{
+  color:#0d1117;
+  padding:5px 10px;
+  border-radius:999px;
+  font-size:0.8rem;
+  font-weight:bold;
+}

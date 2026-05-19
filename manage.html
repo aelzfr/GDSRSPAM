@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Lists - GDSR Hub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="back-button" href="index.html">← Back to Hub</a>
+
+<h1>Manage Lists</h1>
+<p class="subtitle">Staff list tools.</p>
+
+<main class="form-page">
+
+  <div class="form-box">
+    <h2>Add Level</h2>
+
+    <label>List</label>
+    <select id="add-list">
+      <option value="spam">Spam</option>
+      <option value="consistency">Consistency</option>
+    </select>
+
+    <label>Name</label>
+    <input id="add-name">
+
+    <label>Creator</label>
+    <input id="add-creator" value="n/a">
+
+    <label>Tier</label>
+    <input id="add-tier" placeholder="wood">
+
+    <label>Gamemode</label>
+    <input id="add-gamemode" value="wave">
+
+    <label>Difficulty</label>
+    <input id="add-difficulty" type="number">
+
+    <label>FPS</label>
+    <input id="add-fps" value="n/a">
+
+    <label>Description</label>
+    <textarea id="add-description">n/a</textarea>
+
+    <button class="submit-button" onclick="addLevel()">Add Level</button>
+  </div>
+
+  <div class="form-box">
+    <h2>Remove Level</h2>
+
+    <label>List</label>
+    <select id="remove-list">
+      <option value="spam">Spam</option>
+      <option value="consistency">Consistency</option>
+    </select>
+
+    <label>Level Name</label>
+    <input id="remove-name">
+
+    <button class="submit-button" onclick="removeLevel()">Remove Level</button>
+  </div>
+
+  <div class="form-box">
+    <h2>Create Tag</h2>
+
+    <label>Tag Name</label>
+    <input id="tag-name">
+
+    <label>Color</label>
+    <input id="tag-color" type="color" value="#00ffe1">
+
+    <button class="submit-button" onclick="createTag()">Create Tag</button>
+  </div>
+
+  <div class="form-box">
+    <h2>Add Tag To Level</h2>
+
+    <label>List</label>
+    <select id="tag-list">
+      <option value="spam">Spam</option>
+      <option value="consistency">Consistency</option>
+    </select>
+
+    <label>Level Name</label>
+    <input id="tag-level">
+
+    <label>Tag</label>
+    <select id="tag-select"></select>
+
+    <button class="submit-button" onclick="addTagToLevel()">Add Tag</button>
+  </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/auth.js"></script>
+<script src="js/manage.js"></script>
+
+</body>
+</html>
